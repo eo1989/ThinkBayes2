@@ -21,9 +21,7 @@ class Soccer(thinkbayes2.Suite):
         hypo: goal rate in goals per game
         data: number of goals scored in a game
         """
-        # TODO: fill this in
-        like = 1
-        return like
+        return 1
 
     def PredictiveDist(self, label='pred'):
         """Computes the distribution of goals scored in a game.
@@ -32,8 +30,7 @@ class Soccer(thinkbayes2.Suite):
         """
         # TODO: fill this in
         lam = 1
-        pred = thinkbayes2.MakePoissonPmf(lam, 15)
-        return pred
+        return thinkbayes2.MakePoissonPmf(lam, 15)
 
 
 def main():

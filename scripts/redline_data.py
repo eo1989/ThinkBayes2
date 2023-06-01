@@ -94,8 +94,7 @@ class Redis(object):
         pair = self.r.zrange(tripid, 0, 1, withscores=True)
         timestamp, seconds = pair[0]
         pred_ts = float(timestamp) + seconds
-        pred_dt = datetime.fromtimestamp(pred_ts)
-        return pred_dt
+        return datetime.fromtimestamp(pred_ts)
 
 class TrainSpotting(object):
     """Represents one observation of a train."""

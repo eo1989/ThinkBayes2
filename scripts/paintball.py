@@ -26,8 +26,7 @@ def StrafingSpeed(alpha, beta, x):
     Returns: derivative of x with respect to theta
     """
     theta = math.atan2(x - alpha, beta)
-    speed = beta / math.cos(theta)**2
-    return speed
+    return beta / math.cos(theta)**2
 
 
 def MakeLocationPmf(alpha, beta, locations):
@@ -81,8 +80,7 @@ class Paintball(thinkbayes2.Suite, thinkbayes2.Joint):
         alpha, beta = hypo
         x = data
         pmf = MakeLocationPmf(alpha, beta, self.locations)
-        like = pmf.Prob(x)
-        return like
+        return pmf.Prob(x)
 
 
 def MakePmfPlot(alpha = 10):
@@ -169,7 +167,7 @@ def MakeCrediblePlot(suite):
 
     suite: Suite
     """
-    d = dict((pair, 0) for pair in suite.Values())
+    d = {pair: 0 for pair in suite.Values()}
 
     percentages = [75, 50, 25]
     for p in percentages:

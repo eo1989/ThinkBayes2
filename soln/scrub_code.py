@@ -33,7 +33,7 @@ def scrub_code_cells(nb):
 
 if __name__ == '__main__':
     for filename in sys.argv[1:]:
-        print("reading %s" % filename)
+        print(f"reading {filename}")
         # read
         with io.open(filename, encoding='utf8') as f:
             nb = nbformat.read(f, nbformat.NO_CONVERT)
@@ -43,17 +43,17 @@ if __name__ == '__main__':
 
         # new name
         base, ext = os.path.splitext(filename)
-        
+
         if base.endswith("soln"):
             base = base.replace("soln", "")
             base = base.rstrip("_")
-            base = '../' + base
+            base = f'../{base}'
         else:
-            base = base + "_scrubbed"
+            base = f"{base}_scrubbed"
 
-        new_filename = "%s%s" % (base, ext)
-        
+        new_filename = f"{base}{ext}"
+
         # write
-        print("writing %s" % new_filename)
+        print(f"writing {new_filename}")
         with io.open(new_filename, 'w', encoding='utf8') as f:
             nbformat.write(nb, f)

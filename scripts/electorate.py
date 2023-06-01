@@ -21,8 +21,7 @@ class Electorate(thinkbayes2.Suite):
         hypo: 
         data: 
         """
-        like = 1
-        return like
+        return 1
 
 
 def main():

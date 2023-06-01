@@ -38,10 +38,7 @@ class Euro(thinkbayes2.Suite):
         data: string 'H' or 'T'
         """
         x = hypo / 100.0
-        if data == 'H':
-            return x
-        else:
-            return 1-x
+        return x if data == 'H' else 1-x
 
 
 class Euro2(thinkbayes2.Suite):
@@ -55,14 +52,12 @@ class Euro2(thinkbayes2.Suite):
         """
         x = hypo / 100.0
         heads, tails = data
-        like = x**heads * (1-x)**tails
-        return like
+        return x**heads * (1-x)**tails
 
 
 def UniformPrior():
     """Makes a Suite with a uniform prior."""
-    suite = Euro(range(0, 101))
-    return suite
+    return Euro(range(0, 101))
 
 
 def TrianglePrior():

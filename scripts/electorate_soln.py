@@ -23,8 +23,7 @@ class Electorate(thinkbayes2.Suite):
         """
         bias, std, result = data
         error = result - hypo
-        like = thinkbayes2.EvalNormalPdf(error, bias, std)
-        return like
+        return thinkbayes2.EvalNormalPdf(error, bias, std)
 
 
 def main():

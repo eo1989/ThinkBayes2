@@ -25,15 +25,9 @@ class Hockey(thinkbayes2.Suite):
 
         label: string
         """
-        if USE_SUMMARY_DATA:
-            # prior based on each team's average goals scored
-            mu = 2.8
-            sigma = 0.3
-        else:
-            # prior based on each pair-wise match-up
-            mu = 2.8
-            sigma = 0.85
-
+        sigma = 0.3 if USE_SUMMARY_DATA else 0.85
+        # prior based on each team's average goals scored
+        mu = 2.8
         pmf = thinkbayes2.MakeNormalPmf(mu, sigma, 4)
         thinkbayes2.Suite.__init__(self, pmf, label=label)
             
@@ -47,8 +41,7 @@ class Hockey(thinkbayes2.Suite):
         """
         lam = hypo
         k = data
-        like = thinkbayes2.EvalPoissonPmf(k, lam)
-        return like
+        return thinkbayes2.EvalPoissonPmf(k, lam)
 
 
 def MakeGoalPmf(suite, high=10):
@@ -65,8 +58,7 @@ def MakeGoalPmf(suite, high=10):
         pmf = thinkbayes2.MakePoissonPmf(lam, high)
         metapmf.Set(pmf, prob)
 
-    mix = thinkbayes2.MakeMixture(metapmf, label=suite.label)
-    return mix
+    return thinkbayes2.MakeMixture(metapmf, label=suite.label)
 
 
 def MakeGoalTimePmf(suite):
@@ -82,8 +74,7 @@ def MakeGoalTimePmf(suite):
         pmf = thinkbayes2.MakeExponentialPmf(lam, high=2, n=2001)
         metapmf.Set(pmf, prob)
 
-    mix = thinkbayes2.MakeMixture(metapmf, label=suite.label)
-    return mix
+    return thinkbayes2.MakeMixture(metapmf, label=suite.label)
 
 
 class Game(object):

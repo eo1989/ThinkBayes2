@@ -23,9 +23,7 @@ class Gps(thinkbayes2.Suite, thinkbayes2.Joint):
         hypo: 
         data: 
         """
-        # TODO: fill this in
-        like = 1
-        return like
+        return 1
 
 
 def main():

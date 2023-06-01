@@ -21,8 +21,7 @@ class Soccer(thinkbayes2.Suite):
         hypo: 
         data: 
         """
-        like = 1
-        return like
+        return 1
 
     def PredRemaining(self, rem_time, score):
         """Plots the predictive distribution for final number of goals.

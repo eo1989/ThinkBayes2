@@ -15,15 +15,13 @@ def read_csv(filename, constructor):
 
     filename: string filename
     """
-    fp = open(filename)
-    reader = csv.reader(fp)
+    with open(filename) as fp:
+        reader = csv.reader(fp)
 
-    header = reader.next()
-    names = [s.lower() for s in header]
+        header = reader.next()
+        names = [s.lower() for s in header]
 
-    objs = [make_object(t, names, constructor) for t in reader]
-    fp.close()
-
+        objs = [make_object(t, names, constructor) for t in reader]
     return objs
 
 
@@ -34,13 +32,12 @@ def write_csv(filename, header, data):
     header: list of strings
     data: list of rows
     """
-    fp = open(filename, 'w')
-    writer = csv.writer(fp)
-    writer.writerow(header)
+    with open(filename, 'w') as fp:
+        writer = csv.writer(fp)
+        writer.writerow(header)
 
-    for t in data:
-        writer.writerow(t)
-    fp.close()
+        for t in data:
+            writer.writerow(t)
 
 
 def print_cols(cols):
@@ -58,10 +55,7 @@ def make_col_dict(cols, names):
     cols: list of columns
     names: list of names
     """
-    col_dict = {}
-    for name, col in zip(names, cols):
-        col_dict[name] = col
-    return col_dict
+    return dict(zip(names, cols))
 
 
 def make_object(row, names, constructor):

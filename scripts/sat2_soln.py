@@ -25,8 +25,7 @@ class Sat(thinkbayes2.Suite, thinkbayes2.Joint):
         correct = data
         e, d = hypo
         p = ProbCorrect(e, d)
-        like = p if correct else 1-p
-        return like
+        return p if correct else 1-p
 
 
 def ProbCorrect(efficacy, difficulty, a=1):

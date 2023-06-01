@@ -20,10 +20,7 @@ class Train(Dice):
     def Likelihood(self, data, hypo):
         N = hypo
         k, m = data
-        if N < m:
-            return 0
-
-        return m ** (k-1) / N**k
+        return 0 if N < m else m ** (k-1) / N**k
 
 
 def main():

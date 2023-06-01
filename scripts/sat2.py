@@ -22,9 +22,7 @@ class Sat(thinkbayes2.Suite, thinkbayes2.Joint):
         data: boolean, whether the answer is correct
         hypo: pair of (efficacy, difficulty)
         """
-        # TODO: fill this in
-        like = 1
-        return like
+        return 1
 
 
 def ProbCorrect(efficacy, difficulty, a=1):

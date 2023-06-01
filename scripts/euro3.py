@@ -38,8 +38,7 @@ class Euro(thinkbayes2.Suite):
         """
         x = hypo / 100.0
         heads, tails = data
-        like = x**heads * (1-x)**tails
-        return like
+        return x**heads * (1-x)**tails
 
 
 def TrianglePrior():

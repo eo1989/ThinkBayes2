@@ -85,8 +85,7 @@ def MakeCdf():
     ps = [freq/n for freq in freqs]
     xs = numpy.arange(-1.5, 6.5, 1.0)
 
-    cdf = thinkbayes2.Cdf(xs, ps)
-    return cdf
+    return thinkbayes2.Cdf(xs, ps)
 
 
 def PlotCdf(cdf):
@@ -195,8 +194,7 @@ def UncorrelatedGenerator(cdf, _rho=None):
     rho: ignored
     """
     while True:
-        x = cdf.Random()
-        yield x
+        yield cdf.Random()
 
 
 def RdtGenerator(cdf, rho):
@@ -233,8 +231,7 @@ def GenerateSample(n, pc, lam1, lam2):
 
     Returns: list of random variates
     """
-    xs = [GenerateRdt(pc, lam1, lam2) for _ in range(n)]
-    return xs
+    return [GenerateRdt(pc, lam1, lam2) for _ in range(n)]
 
 
 def GenerateCdf(n=1000, pc=0.35, lam1=0.79, lam2=5.0):
@@ -248,8 +245,7 @@ def GenerateCdf(n=1000, pc=0.35, lam1=0.79, lam2=5.0):
     Returns: Cdf of generated sample
     """
     xs = GenerateSample(n, pc, lam1, lam2)
-    cdf = thinkbayes2.MakeCdfFromList(xs)
-    return cdf
+    return thinkbayes2.MakeCdfFromList(xs)
 
 
 def ModelCdf(pc=0.35, lam1=0.79, lam2=5.0):
@@ -336,8 +332,7 @@ class Cache(object):
         name: string
         """
         pmf = self.joint.Conditional(0, 1, bucket, name=name)
-        cdf = pmf.MakeCdf()
-        return cdf
+        return pmf.MakeCdf()
 
     def ProbOlder(self, cm, age):
         """Computes the probability of exceeding age, given size.
@@ -555,11 +550,8 @@ class Calculator(object):
             ps = [cdf.Percentile(p) for p in percentiles]
             ts.append(ps)
 
-        # dump the results into a table
-        fp = open('kidney_table.tex', 'w')
-        PrintTable(fp, xs, ts)
-        fp.close()
-
+        with open('kidney_table.tex', 'w') as fp:
+            PrintTable(fp, xs, ts)
         # make the figure
         linewidths = [1, 2, 3, 2, 1]
         alphas = [0.3, 0.5, 1, 0.5, 0.3]
@@ -690,8 +682,7 @@ def FitLine(xs, ys, fxs):
     # r2 = correlation.CoefDetermination(ys, res)
 
     lfxs = [math.log(x) for x in fxs]
-    fys = [inter + slope * x for x in lfxs]
-    return fys
+    return [inter + slope * x for x in lfxs]
 
 
 def MakeTicks(xs):
