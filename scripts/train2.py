@@ -16,10 +16,7 @@ class Train(Dice):
 
 
 def Mean(suite):
-    total = 0
-    for hypo, prob in suite.Items():
-        total += hypo * prob
-    return total
+    return sum(hypo * prob for hypo, prob in suite.Items())
 
 
 def MakePosterior(high, dataset):

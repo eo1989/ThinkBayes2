@@ -52,8 +52,7 @@ class Height(thinkbayes2.Suite, thinkbayes2.Joint):
         """
         x = data
         mu, sigma = hypo
-        like = scipy.stats.norm.pdf(x, mu, sigma)
-        return like
+        return scipy.stats.norm.pdf(x, mu, sigma)
 
     def LogLikelihood(self, data, hypo):
         """Computes the log likelihood of the data under the hypothesis.
@@ -67,8 +66,7 @@ class Height(thinkbayes2.Suite, thinkbayes2.Joint):
         """
         x = data
         mu, sigma = hypo
-        loglike = EvalNormalLogPdf(x, mu, sigma)
-        return loglike
+        return EvalNormalLogPdf(x, mu, sigma)
 
     def LogUpdateSetFast(self, data):
         """Updates the suite using a faster implementation.
@@ -246,10 +244,12 @@ def PlotPosterior(suite, pcolor=False, contour=True):
     thinkplot.Clf()
     thinkplot.Contour(suite.GetDict(), pcolor=pcolor, contour=contour)
 
-    thinkplot.Save(root='variability_posterior_%s' % suite.label,
-                title='Posterior joint distribution',
-                xlabel='Mean height (cm)',
-                ylabel='Stddev (cm)')
+    thinkplot.Save(
+        root=f'variability_posterior_{suite.label}',
+        title='Posterior joint distribution',
+        xlabel='Mean height (cm)',
+        ylabel='Stddev (cm)',
+    )
 
 
 def PlotCoefVariation(suites):
@@ -324,11 +324,7 @@ def ReadHeights(nrows=None):
     resp = brfss.ReadBrfss(nrows=nrows).dropna(subset=['sex', 'htm3'])
     groups = resp.groupby('sex')
 
-    d = {}
-    for name, group in groups:
-        d[name] = group.htm3.values
-
-    return d
+    return {name: group.htm3.values for name, group in groups}
 
 
 def UpdateSuite1(suite, xs):

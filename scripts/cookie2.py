@@ -45,8 +45,7 @@ class Cookie(Pmf):
         hypo: string bowl ID
         """
         mix = self.mixes[hypo]
-        like = mix[data]
-        return like
+        return mix[data]
 
 
 def main():

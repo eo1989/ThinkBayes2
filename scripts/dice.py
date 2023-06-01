@@ -19,10 +19,7 @@ class Dice(Suite):
         hypo: integer number of sides on the die
         data: integer die roll
         """
-        if hypo < data:
-            return 0
-        else:
-            return 1.0/hypo
+        return 0 if hypo < data else 1.0/hypo
 
 
 def main():

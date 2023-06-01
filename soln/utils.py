@@ -33,10 +33,9 @@ def write_table(table, label, **options):
     options: passed to DataFrame.to_latex
     """
     filename = f'tables/{label}.tex'
-    fp = open(filename, 'w')
-    s = table.to_latex(**options)
-    fp.write(s)
-    fp.close()
+    with open(filename, 'w') as fp:
+        s = table.to_latex(**options)
+        fp.write(s)
     
     
 def write_pmf(pmf, label):
@@ -90,8 +89,7 @@ def savefig(root, **options):
     root: string filename root
     options: passed to plt.savefig
     """
-    format = options.pop('format', None)
-    if format:
+    if format := options.pop('format', None):
         formats = [format]
     else:
         formats = ['pdf', 'png']
@@ -109,8 +107,7 @@ def make_die(sides):
     returns: Pmf
     """
     outcomes = np.arange(1, sides+1)
-    die = Pmf(1/sides, outcomes)
-    return die
+    return Pmf(1/sides, outcomes)
 
 
 def add_dist_seq(seq):

@@ -113,9 +113,7 @@ def main():
     hypos = []
     for n in range(32, 350):
         for p1 in probs:
-            for p2 in probs:
-                hypos.append((n, p1, p2))
-
+            hypos.extend((n, p1, p2) for p2 in probs)
     suite = Lincoln(hypos)
     suite.Update(data)
 

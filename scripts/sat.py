@@ -150,8 +150,7 @@ class Exam(object):
             scores = self.PmfCorrect(efficacy)
             pmfs.Set(scores, prob)
 
-        mix = thinkbayes2.MakeMixture(pmfs)
-        return mix
+        return thinkbayes2.MakeMixture(pmfs)
 
     def CalibrateDifficulty(self):
         """Make a plot showing the model distribution of raw scores."""
@@ -176,8 +175,7 @@ class Exam(object):
 
         efficacy: float
         """
-        pmf = PmfCorrect(efficacy, self.difficulties)
-        return pmf
+        return PmfCorrect(efficacy, self.difficulties)
 
     def Lookup(self, raw):
         """Looks up a raw score and returns a scaled score."""
@@ -189,7 +187,7 @@ class Exam(object):
         Since we ignore the penalty, negative scores round up to zero.
         """
         raw = self.scale.Reverse(score)
-        return raw if raw > 0 else 0
+        return max(raw, 0)
         
     def ReverseScale(self, pmf):
         """Applies the reverse scale to the values of a PMF.
@@ -228,8 +226,7 @@ class Sat(thinkbayes2.Suite):
 
         k = self.exam.Reverse(score)
         n = self.exam.max_score
-        like = thinkbayes2.EvalBinomialPmf(k, n, p_correct)
-        return like
+        return thinkbayes2.EvalBinomialPmf(k, n, p_correct)
 
     def PlotPosteriors(self, other):
         """Plots posterior distributions of efficacy.
@@ -271,13 +268,11 @@ class Sat2(thinkbayes2.Suite):
         raw = self.exam.Reverse(score)
 
         pmf = self.exam.PmfCorrect(efficacy)
-        like = pmf.Prob(raw)
-        return like
+        return pmf.Prob(raw)
 
     def MakePredictiveDist(self):
         """Returns the distribution of raw scores expected on a re-test."""
-        raw_pmf = self.exam.MakeRawScoreDist(self)
-        return raw_pmf
+        return self.exam.MakeRawScoreDist(self)
     
     def PlotPosteriors(self, other):
         """Plots posterior distributions of efficacy.
@@ -425,8 +420,7 @@ def PmfCorrect(efficacy, difficulties):
 
     ps = [ProbCorrect(efficacy, difficulty) for difficulty in difficulties]
     pmfs = [BinaryPmf(p) for p in ps]
-    dist = sum(pmfs, pmf0)
-    return dist
+    return sum(pmfs, pmf0)
 
 
 def MakeDifficulties(center, width, n):

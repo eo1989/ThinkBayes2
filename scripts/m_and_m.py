@@ -42,8 +42,7 @@ class M_and_M(Suite):
         """
         bag, color = data
         mix = self.hypotheses[hypo][bag]
-        like = mix[color]
-        return like
+        return mix[color]
 
 
 def main():

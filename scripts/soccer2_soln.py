@@ -23,8 +23,7 @@ class Soccer(thinkbayes2.Suite):
         """
         goals = data
         lam = hypo
-        like = thinkbayes2.EvalPoissonPmf(goals, lam)
-        return like
+        return thinkbayes2.EvalPoissonPmf(goals, lam)
 
     def PredictiveDist(self, label='pred'):
         """Computes the distribution of goals scored in a game.
@@ -36,8 +35,7 @@ class Soccer(thinkbayes2.Suite):
             pred = thinkbayes2.MakePoissonPmf(lam, 15)
             metapmf[pred] = prob
 
-        mix = thinkbayes2.MakeMixture(metapmf, label=label)
-        return mix
+        return thinkbayes2.MakeMixture(metapmf, label=label)
 
 
 def main():

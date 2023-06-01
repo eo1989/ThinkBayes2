@@ -26,21 +26,20 @@ def ReadData(filename='showcases.2011.csv'):
 
     Returns: sequence of (price1 price2 bid1 bid2 diff1 diff2) tuples
     """
-    fp = open(filename)
-    reader = csv.reader(fp)
-    res = []
+    with open(filename) as fp:
+        reader = csv.reader(fp)
+        res = []
 
-    for t in reader:
-        _heading = t[0]
-        data = t[1:]
-        try:
-            data = [int(x) for x in data]
-            # print heading, data[0], len(data)
-            res.append(data)
-        except ValueError:
-            pass
+        for t in reader:
+            _heading = t[0]
+            data = t[1:]
+            try:
+                data = [int(x) for x in data]
+                # print heading, data[0], len(data)
+                res.append(data)
+            except ValueError:
+                pass
 
-    fp.close()
     return list(zip(*res))
     
 
@@ -67,9 +66,7 @@ class Price(thinkbayes2.Suite):
         guess = data
 
         error = price - guess
-        like = self.player.ErrorDensity(error)
-
-        return like
+        return self.player.ErrorDensity(error)
 
 
 class GainCalculator(object):
@@ -127,19 +124,14 @@ class GainCalculator(object):
         prob = self.ProbWin(diff)
 
         # if you are within 250 dollars, you win both showcases
-        if diff <= 250:
-            return 2 * price * prob
-        else:
-            return price * prob
+        return 2 * price * prob if diff <= 250 else price * prob
 
     def ProbWin(self, diff):
         """Computes the probability of winning for a given diff.
 
         diff: how much your bid was off by
         """
-        prob = (self.opponent.ProbOverbid() + 
-                self.opponent.ProbWorseThan(diff))
-        return prob
+        return self.opponent.ProbOverbid() + self.opponent.ProbWorseThan(diff)
 
 
 class Player(object):

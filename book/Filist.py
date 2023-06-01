@@ -62,8 +62,7 @@ class Filist(list):
         """
         pat = re.compile(pattern)
         for i in range(0, len(self)):
-            match = pat.search(self[i])
-            if match:
+            if match := pat.search(self[i]):
                 return i, match
 
     def sub_lines(self, pattern, replace, start=0):

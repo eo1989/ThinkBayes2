@@ -23,8 +23,7 @@ class Soccer(thinkbayes2.Suite):
         """
         x = data
         lam = hypo / 90
-        like = thinkbayes2.EvalExponentialPdf(x, lam)
-        return like
+        return thinkbayes2.EvalExponentialPdf(x, lam)
 
     def PredRemaining(self, rem_time, score):
         """Plots the predictive distribution for final number of goals.

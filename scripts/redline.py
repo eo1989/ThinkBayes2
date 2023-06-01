@@ -100,8 +100,7 @@ def MakeUniformPmf(low, high):
     high: highest value (inclusive)
     """
     xs = MakeRange(low, high)
-    pmf = thinkbayes2.Pmf(xs)
-    return pmf    
+    return thinkbayes2.Pmf(xs)    
     
 
 def MakeRange(low=10, high=None, skip=10):
@@ -114,8 +113,7 @@ def MakeRange(low=10, high=None, skip=10):
     if high is None:
         high = UPPER_BOUND
 
-    xs = numpy.arange(low, high+skip, skip)
-    return xs
+    return numpy.arange(low, high+skip, skip)
 
 
 class WaitTimeCalculator(object):
@@ -155,8 +153,7 @@ class WaitTimeCalculator(object):
         Returns: sequence of values
         """
         cdf_y = thinkbayes2.Cdf(self.pmf_y)
-        sample = cdf_y.Sample(n)
-        return sample
+        return cdf_y.Sample(n)
 
     def GenerateSampleGaps(self, n):
         """Generates a random sample of gaps seen by passengers.
@@ -166,8 +163,7 @@ class WaitTimeCalculator(object):
         Returns: sequence of values
         """
         cdf_zb = thinkbayes2.Cdf(self.pmf_zb)
-        sample = cdf_zb.Sample(n)
-        return sample
+        return cdf_zb.Sample(n)
 
     def GenerateSamplePassengers(self, lam, n):
         """Generates a sample wait time and number of arrivals.
@@ -255,8 +251,7 @@ def PmfOfWaitTime(pmf_zb):
         uniform = MakeUniformPmf(0, gap)
         metapmf.Set(uniform, prob)
 
-    pmf_y = thinkbayes2.MakeMixture(metapmf, label='y')
-    return pmf_y
+    return thinkbayes2.MakeMixture(metapmf, label='y')
 
 
 def ScaleDists(dists, factor):
@@ -322,8 +317,7 @@ class ArrivalRate(thinkbayes2.Suite):
         """
         lam = hypo
         x, k = data
-        like = thinkbayes2.EvalPoissonPmf(k, lam * x)
-        return like
+        return thinkbayes2.EvalPoissonPmf(k, lam * x)
 
 
 class ArrivalRateEstimator(object):
@@ -383,8 +377,7 @@ class Elapsed(thinkbayes2.Suite):
         """
         x = hypo
         lam, k = data
-        like = thinkbayes2.EvalPoissonPmf(k, lam * x)
-        return like
+        return thinkbayes2.EvalPoissonPmf(k, lam * x)
 
 
 def PredictWaitTime(pmf_zb, pmf_x):
@@ -428,9 +421,7 @@ class Gaps(thinkbayes2.Suite):
         """
         z = hypo
         y = data
-        if y > z:
-            return 0
-        return 1.0 / z
+        return 0 if y > z else 1.0 / z
 
 
 class GapDirichlet(thinkbayes2.Dirichlet):

@@ -26,8 +26,7 @@ class Hyrax(thinkbayes2.Suite):
             return 0
 
         p = tagged / hypo
-        like = thinkbayes2.EvalBinomialPmf(k, n, p)
-        return like
+        return thinkbayes2.EvalBinomialPmf(k, n, p)
 
 
 class Hyrax2(thinkbayes2.Suite):
@@ -42,11 +41,7 @@ class Hyrax2(thinkbayes2.Suite):
         N = hypo
         K, n, k = data
 
-        if hypo < K + (n - k):
-            return 0
-
-        like = thinkbayes2.EvalHypergeomPmf(k, N, K, n)
-        return like
+        return 0 if N < K + (n - k) else thinkbayes2.EvalHypergeomPmf(k, N, K, n)
 
 
 def main():
